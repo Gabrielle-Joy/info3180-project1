@@ -11,7 +11,22 @@ class UserProfile(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(80))
     last_name = db.Column(db.String(80))
-    username = db.Column(db.String(80), unique=True)
+    email = db.Column(db.String(80))
+    location = db.Column(db.String(80))
+    gender = db.Column(db.String(80))
+    date= db.Column(db.String(80))
+    bio = db.Column(db.String(255))
+    file_location = db.column(db.String(100))
+    
+    def __init__(self, first_name, last_name, email, location, gender,date, bio,file_location):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.location = location
+        self.gender = gender
+        self.date=date
+        self.bio = bio
+        self.file_location = file_location
 
     def is_authenticated(self):
         return True
