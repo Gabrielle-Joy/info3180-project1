@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block main %}
+  <div class="profile-form center-block">
+    <h2>Add Profile</h2>
+    {% include 'flash_messages.html' %}
+    <form action="{{ url_for('profile') }}" method="post">
+      {{ form.csrf_token }}
+      <div class="form-group">
+        {{ form.firstname.label }}
+        {{ form.firstname(class='form-control') }}
+      </div>
+      <div class="form-group">
+        {{ form.lastname.label }}
+        {{ form.lastname(class='form-control') }}
+      </div>
+      <div class="form-group">
+        {{ form.gender.label }}
+        {{ form.gender(class='form-control') }}
+      </div>
+      <div class="form-group">
+        {{ form.email.label }}
+        {{ form.email(class='form-control') }}
+      </div>
+      <div class="form-group">
+        {{ form.biography.label }}
+        {{ form.biography(class='form-control') }}
+      </div>
+      <div class="form-group">
+        {{ form.profilePicture.label }}
+        {{ form.profilePicture(class='form-control') }}
+      </div>
+      <button type="submit" name="submit" class="btn btn-primary btn-block">Add Profile</button>
+    </form>
+  </div>
+{% endblock %}
