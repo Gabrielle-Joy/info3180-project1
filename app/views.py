@@ -4,7 +4,7 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
-import os
+import os,uuid
 from app import app, db
 from flask import render_template, request, redirect, url_for, flash
 # from flask_login import login_user, logout_user, current_user, login_required
@@ -32,25 +32,32 @@ def about():
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     form = ProfileForm()
-    if request.method == "POST":
-        # change this to actually validate the entire form submission
-        # and not just one field
-        if form.validate():
-            firstName = request.form['firstname']
-            lastName = request.form['lastName']
-            gender = request.form['gender']
-            email = request.form['email']
-            biography = request.form['biography']
-            profilePicture = request.form['profilePicture'].data
-            fileName = hashlib.md5(profilePicture.tobytes()).hexdigest()
-            profilePicture.save(os.path.join(app.config['UPLOAD_FOLDER'],fileName))
-            print(fileName)
-            user = UserProfile(firstName,lastName,gender,email,biography,fileName)
-            db.session.add(user)
-            db.session.commit()
-            # remember to flash a message to the user
-            flash("HELLO")
-            return redirect(url_for('home'))  # they should be redirected to a secure-page route instead    
+    print(form.errors)
+
+    if form.is_submitted():
+        print ("submitted")
+
+    if form.validate():
+        print ("valid")
+
+    print(form.errors)
+    if request.method == "POST" and form.validate_on_submit():
+        print("HELLO")
+        firstName = request.form['firstname']
+        lastName = request.form['lastname']
+        gender = request.form['gender']
+        email = request.form['email']
+        biography = request.form['biography']
+        location = request.form['location']
+        profilePicture = form.profilePicture.data
+        fileName = uuid.uuid1().int 
+        profilePicture.save(os.path.join(app.config['UPLOAD_FOLDER'],str(fileName)))
+        user = UserProfile(firstName,lastName,gender,email,location,biography,fileName)
+        db.session.add(user)
+        db.session.commit()
+        # remember to flash a message to the user
+        flash("HELLO")
+        return redirect(url_for('home'))  # they should be redirected to a secure-page route instead        
     return render_template("profile.html", form=form)
 
 
