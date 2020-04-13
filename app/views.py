@@ -27,6 +27,16 @@ def about():
     """Render the website's about page."""
     return render_template('about.html')
 
+@app.route('/profile/')
+def profile():
+    """Render the website's profile page."""
+    return render_template('profile.html')
+
+@app.route('/profiles/')
+def profiles():
+    """Render the website's profiles page."""
+    return render_template('profiles.html')
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
