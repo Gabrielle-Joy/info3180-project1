@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, TextAreaField
+from wtforms import StringField, PasswordField, TextAreaField, SelectField
 from wtforms.validators import InputRequired, DataRequired, Email, length
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 
@@ -11,7 +11,10 @@ class LoginForm(FlaskForm):
 class ProfileForm(FlaskForm):
     fname = StringField('First Name', validators=[DataRequired()])
     lname = StringField('Last Name', validators=[DataRequired()])
-    gender = StringField('Gender', validators=[DataRequired()])
+    gender = SelectField(
+        'Gender', choices=[('SG', 'Select Gender'), ('M', 'Male'), ('F', 'Female')], 
+        validators=[DataRequired()]
+    )
     email = StringField('Email', validators=[DataRequired(), Email()])
     location = StringField('Location', validators=[DataRequired()])
     biography = TextAreaField('Biography', validators=[DataRequired(), length(max=200)])
