@@ -61,6 +61,13 @@ def profiles():
     records = db.session.query(UserProfile).all()
     return render_template('profiles.html', images=images, records =records)
 
+@app.route('/profile/<userid>')
+def userProfile(userid):
+    """Render the all profiles in database"""
+    images = get_uploaded_images()
+    record = UserProfile.query.filter_by(id=userid).first()
+    return render_template('userProfile.html', images=images, record =record)
+
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     form = ProfileForm()

@@ -28,7 +28,8 @@ class UserProfile(db.Model):
         self.gender = gender
         self.bio = bio
         self.file_location = file_location
-        self.date_joined = datetime.datetime.now()
+        temp = datetime.datetime.now()
+        self.date_joined = temp.strftime("%B %m, %Y")
 
 
     def is_authenticated(self):
