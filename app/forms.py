@@ -1,17 +1,25 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import  FileField, FileRequired, FileAllowed
-from wtforms import SelectField,TextAreaField,TextField
-from wtforms.validators import InputRequired
+from wtforms import StringField, PasswordField, TextAreaField, SelectField
+from wtforms.validators import InputRequired, DataRequired, Email, length
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 
+
+class LoginForm(FlaskForm):
+    username = StringField('Username', validators=[InputRequired()])
+    password = PasswordField('Password', validators=[InputRequired()])
 
 class ProfileForm(FlaskForm):
-    firstname = TextField('First Name', validators=[InputRequired()])
-    lastname = TextField('Last Name', validators=[InputRequired()])
-    gender = SelectField('Gender', validators=[InputRequired()],choices = [('male','M'),('female','F')])
-    email = TextField('Email', validators=[InputRequired()])
-    location = TextField('Location', validators=[InputRequired()])
-    biography = TextAreaField('Biography', validators=[InputRequired()])
-    profilePicture = FileField('Photo', validators=[
+    fname = StringField('First Name', validators=[DataRequired()])
+    lname = StringField('Last Name', validators=[DataRequired()])
+    gender = SelectField(
+        'Gender', choices=[('SG', 'Select Gender'), ('M', 'Male'), ('F', 'Female')], 
+        validators=[DataRequired()]
+    )
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    location = StringField('Location', validators=[DataRequired()])
+    biography = TextAreaField('Biography', validators=[DataRequired(), length(max=200)])
+    photo = FileField('Profile Picture', validators=[
         FileRequired(),
         FileAllowed(['jpg', 'png', 'Images only!'])
     ])
+

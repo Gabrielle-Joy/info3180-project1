@@ -7,10 +7,10 @@ This file creates your application.
 import os,uuid
 from app import app, db
 from flask import render_template, request, redirect, url_for, flash
-# from flask_login import login_user, logout_user, current_user, login_required
-from werkzeug.utils import secure_filename
-from app.forms import ProfileForm
+from flask_login import login_user, logout_user, current_user, login_required
+from app.forms import LoginForm, ProfileForm
 from app.models import UserProfile
+from werkzeug.utils import secure_filename
 
 
 ###
@@ -28,6 +28,36 @@ def about():
     """Render the website's about page."""
     return render_template('about.html')
 
+@app.route('/profile/')
+def profile():
+    """Render the website's profile page."""
+    profileForm = ProfileForm()
+
+    if request.method == 'POST':
+        if profileForm.validate_on_submit():
+            fname = profileForm.fname.data
+            lname = profileForm.lname.data
+            gender = profileForm.gender.data
+            email = profileForm.email.data
+            location = profileForm.location.data
+            biography = profileForm.biography.data
+
+            photo = uploadForm.photo.data
+
+            filename = secure_filename(photo.filename)
+            photo.save(os.path.join(
+                app.config['UPLOAD_FOLDER'], filename
+            ))
+
+            flash('New profile has been added.', 'success')
+            return redirect(url_for('home'))
+
+    return render_template('profile.html', form=profileForm)
+
+@app.route('/profiles/')
+def profiles():
+    """Render the website's profiles page."""
+    return render_template('profiles.html')
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
