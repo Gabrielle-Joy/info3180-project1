@@ -9,8 +9,8 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired()])
 
 class ProfileForm(FlaskForm):
-    fname = StringField('First Name', validators=[DataRequired()])
-    lname = StringField('Last Name', validators=[DataRequired()])
+    firstName = StringField('First Name', validators=[DataRequired()])
+    lastName = StringField('Last Name', validators=[DataRequired()])
     gender = SelectField(
         'Gender', choices=[('SG', 'Select Gender'), ('M', 'Male'), ('F', 'Female')], 
         validators=[DataRequired()]

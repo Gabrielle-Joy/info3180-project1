@@ -1,6 +1,16 @@
 {% extends "base.html" %}
 
 {% block main %}
-<h1 class="page-header">Profiles</h1>
-insert list of cards :)
+    <h1 class="page-header">Profiles</h1>
+    {% for user in records %}
+        <div class="media ">
+            <img src="{{ url_for('static', filename="uploads/" + user.file_location) }}"   class="align-self-center mr-3 img-thumbnail" alt="...">
+            <div class="media-body">
+                <h5 class="mt-0">{{user.firstName}} {{user.lastName}}</h5>
+                <p>{{user.gender}}</p>
+                <p class="mb-0">{{user.location}}</p>
+                <button type="" class="btn btn-primary">View Profile</button>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

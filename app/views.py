@@ -28,36 +28,38 @@ def about():
     """Render the website's about page."""
     return render_template('about.html')
 
-@app.route('/profile/')
-def profile():
-    """Render the website's profile page."""
-    profileForm = ProfileForm()
+# @app.route('/profile/')
+# def profile():
+#     """Render the website's profile page."""
+#     profileForm = ProfileForm()
 
-    if request.method == 'POST':
-        if profileForm.validate_on_submit():
-            fname = profileForm.fname.data
-            lname = profileForm.lname.data
-            gender = profileForm.gender.data
-            email = profileForm.email.data
-            location = profileForm.location.data
-            biography = profileForm.biography.data
+#     if request.method == 'POST':
+#         if profileForm.validate_on_submit():
+#             fname = profileForm.fname.data
+#             lname = profileForm.lname.data
+#             gender = profileForm.gender.data
+#             email = profileForm.email.data
+#             location = profileForm.location.data
+#             biography = profileForm.biography.data
 
-            photo = uploadForm.photo.data
+#             photo = uploadForm.photo.data
 
-            filename = secure_filename(photo.filename)
-            photo.save(os.path.join(
-                app.config['UPLOAD_FOLDER'], filename
-            ))
+#             filename = secure_filename(photo.filename)
+#             photo.save(os.path.join(
+#                 app.config['UPLOAD_FOLDER'], filename
+#             ))
 
-            flash('New profile has been added.', 'success')
-            return redirect(url_for('home'))
+#             flash('New profile has been added.', 'success')
+#             return redirect(url_for('home'))
 
-    return render_template('profile.html', form=profileForm)
+#     return render_template('profile.html', form=profileForm)
 
-@app.route('/profiles/')
+@app.route('/profiles')
 def profiles():
-    """Render the website's profiles page."""
-    return render_template('profiles.html')
+    """Render the all profiles in database"""
+    images = get_uploaded_images()
+    records = db.session.query(UserProfile).all()
+    return render_template('profiles.html', images=images, records =records)
 
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
@@ -73,15 +75,15 @@ def profile():
     print(form.errors)
     if request.method == "POST" and form.validate_on_submit():
         print("HELLO")
-        firstName = request.form['firstname']
-        lastName = request.form['lastname']
+        firstName = request.form['firstName']
+        lastName = request.form['lastName']
         gender = request.form['gender']
         email = request.form['email']
         biography = request.form['biography']
         location = request.form['location']
-        profilePicture = form.profilePicture.data
+        photo = form.photo.data
         fileName = uuid.uuid1().int 
-        profilePicture.save(os.path.join(app.config['UPLOAD_FOLDER'],str(fileName)))
+        photo.save(os.path.join(app.config['UPLOAD_FOLDER'],str(fileName)))
         user = UserProfile(firstName,lastName,gender,email,location,biography,fileName)
         db.session.add(user)
         db.session.commit()
@@ -99,6 +101,17 @@ def load_user(id):
 ###
 # The functions below should be applicable to all Flask apps.
 ###
+def get_uploaded_images():
+    rootdir = os.getcwd()
+    print(rootdir)
+    lst = []
+    for subdir, dirs, files in os.walk(rootdir + '/app/static/uploads'):
+        for file in files:
+            if file=='.gitkeep':
+                continue
+            lst.append(file)
+    return lst
+
 
 
 @app.route('/<file_name>.txt')
