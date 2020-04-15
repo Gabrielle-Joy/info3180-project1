@@ -12,7 +12,7 @@ class ProfileForm(FlaskForm):
     firstName = StringField('First Name', validators=[DataRequired()])
     lastName = StringField('Last Name', validators=[DataRequired()])
     gender = SelectField(
-        'Gender', choices=[('SG', 'Select Gender'), ('M', 'Male'), ('F', 'Female')], 
+        'Gender', choices=[('SG', 'Select Gender'), ('Male', 'Male'), ('Female', 'Female')], 
         validators=[DataRequired()]
     )
     email = StringField('Email', validators=[DataRequired(), Email()])

@@ -18,7 +18,7 @@ class UserProfile(db.Model):
     date= db.Column(db.String(80))
     bio = db.Column(db.String(255))
     file_location = db.Column(db.String(100))
-    date_joined = db.Column(db.DateTime)
+    date_joined = db.Column(db.Date)
     
     def __init__(self, first_name, last_name, gender, email, location, bio,file_location):
         self.first_name = first_name
@@ -28,7 +28,7 @@ class UserProfile(db.Model):
         self.gender = gender
         self.bio = bio
         self.file_location = file_location
-        temp = datetime.datetime.now()
+        temp = datetime.datetime.utcnow()
         self.date_joined = temp.strftime("%B %m, %Y")
 
 

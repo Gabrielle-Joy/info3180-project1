@@ -2,15 +2,18 @@
 
 {% block main %}
     <h1 class="page-header">Profiles</h1>
+    <div class="list-group-item">
     {% for user in records %}
-        <div class="media ">
-            <img src="{{ url_for('static', filename="uploads/" + user.file_location) }}"   class="align-self-center mr-3 img-thumbnail" alt="...">
-            <div class="media-body">
-                <h5 class="mt-0">{{user.firstName}} {{user.lastName}}</h5>
+        <div class="card">
+            <img src="{{ url_for('static', filename="uploads/" + user.file_location) }}"   class="profile" alt="...">
+            <div class="card-body">
+                <h5>{{user.first_name}} {{user.last_name}}</h5>
                 <p>{{user.gender}}</p>
                 <p class="mb-0">{{user.location}}</p>
-                <button type="" class="btn btn-primary">View Profile</button>
+                <br>
+                <a href="{{ url_for('userProfile', userid= user.id) }}" class="btn btn-primary">View Profile</a>
             </div>
         </div>
     {% endfor %}
+    </div>
 {% endblock %}

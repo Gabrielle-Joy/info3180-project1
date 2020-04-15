@@ -1,3 +1,17 @@
 body {
     padding-top: 5rem;
 }
+
+img.profile {
+    height: 100px;
+    width: 100px;
+}
+
+img.profile-list {
+    height: 250px;
+    width: 250px;
+}
+
+.card {
+    margin: 10px;
+}

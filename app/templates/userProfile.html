@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 
 {% block main %}
-        <div class="media ">
-            <img src="{{ url_for('static', filename="uploads/" + record.file_location) }}"   class="align-self-center mr-3 img-thumbnail" alt="...">
-            <div class="media-body">
-                <h2 class="mt-0">{{record.firstName}} {{record.lastName}}</h5>
+        <div class="card">
+            <img src="{{ url_for('static', filename="uploads/" + record.file_location) }}"   class="align-self-center mr-3 img-thumbnail profile-list" alt="...">
+            <div class="card-body">
+                <h2 class="mt-0">{{record.first_name}} {{record.last_name}}</h5>
                 <p>{{record.email}}</p>
                 <p>{{record.location}}</p>
                 <p>Joined on {{record.date_joined}}</p>
                 <p>{{record.bio}}</p>
-                <button type="" class="btn btn-primary">View Profile</button>
+                <button type="" class="btn btn-primary">Send message</button>
+                <button type="" class="btn btn-primary">Follow</button>
             </div>
         </div>
 {% endblock %}
